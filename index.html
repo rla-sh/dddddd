@@ -1,0 +1,1127 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Notice The Unnoticed</title>
+
+<!-- Cossette Texte Regular -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cossette+Texte:wght@400&display=swap" rel="stylesheet">
+
+
+<style>
+
+/* =================================
+   기본 설정
+================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden;
+  scroll-behavior: auto;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+
+  font-family: 'Cossette Texte', sans-serif;
+  font-weight: 400;
+  color: #ffffff;
+
+  background: transparent;
+
+  isolation: isolate;
+}
+
+
+/* =================================
+   배경
+================================= */
+
+#background {
+  position: fixed;
+  inset: 0;
+
+  z-index: 0;
+
+  background: linear-gradient(
+    112deg,
+    #A95059 0%,
+    #37245F 25%,
+    #2A2059 50%,
+    #211C53 75%,
+    #171647 100%
+  );
+
+  pointer-events: none;
+}
+
+
+/* =================================
+   제목 배경
+================================= */
+
+.title-bg {
+  position: fixed;
+
+  top: 3.9vh;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 40.5vw;
+  max-width: 642px;
+  height: 7vh;
+
+  background-color: #121212;
+  mix-blend-mode: overlay;
+
+  z-index: 1;
+  pointer-events: none;
+}
+
+
+/* =================================
+   제목 텍스트
+================================= */
+
+.title-text {
+  position: fixed;
+
+  top: 3.9vh;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 40.5vw;
+  max-width: 642px;
+  height: 7vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: 'Cossette Texte', sans-serif;
+  font-size: clamp(28px, 4vw, 64px);
+  font-weight: 400;
+  line-height: 1;
+
+  color: #ffffff;
+  white-space: nowrap;
+
+  z-index: 2;
+  pointer-events: none;
+}
+
+
+/* =================================
+   날짜 바 배경
+================================= */
+
+.date-bg {
+  position: fixed;
+
+  left: 2.45vw;
+  right: 2.45vw;
+  bottom: 2.45vh;
+
+  height: 5.05vh;
+
+  background-color: #121212;
+  mix-blend-mode: overlay;
+
+  z-index: 1;
+  pointer-events: none;
+}
+
+
+/* =================================
+   날짜 영역
+================================= */
+
+.date-track {
+  position: fixed;
+
+  left: 2.45vw;
+  right: 2.45vw;
+  bottom: 2.45vh;
+
+  height: 5.05vh;
+
+  display: grid;
+  grid-template-columns: repeat(31, minmax(0, 1fr));
+
+  align-items: stretch;
+
+  z-index: 2;
+  pointer-events: none;
+}
+
+
+/* =================================
+   흰색 날짜 표시 박스
+================================= */
+
+.date-highlight {
+  position: absolute;
+
+  top: 15%;
+  bottom: 15%;
+
+  left: 0;
+  width: calc(100% / 31);
+
+  background-color: #ffffff;
+
+  z-index: 0;
+  pointer-events: none;
+}
+
+
+/* =================================
+   날짜 숫자
+================================= */
+
+.date-number {
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: 'Cossette Texte', sans-serif;
+  font-size: clamp(12px, 1.5vw, 24px);
+  font-weight: 400;
+  line-height: 1;
+
+  font-variant-numeric: tabular-nums;
+  color: #ffffff;
+
+  z-index: 1;
+}
+
+
+/* 숫자 색상 반전 */
+
+.date-number.active {
+  color: #ffffff;
+  mix-blend-mode: difference;
+}
+
+
+/* =================================
+   스크롤 영역
+================================= */
+
+#scroll-space {
+  width: 1px;
+  height: 100vh;
+
+  pointer-events: none;
+}
+
+
+/* =================================
+   작은 화면 대응
+================================= */
+
+@media (max-width: 700px) {
+
+  .title-bg,
+  .title-text {
+    width: 86vw;
+    max-width: none;
+    height: 7vh;
+    top: 3vh;
+  }
+
+  .title-text {
+    font-size: 6vw;
+  }
+
+  .date-bg,
+  .date-track {
+    left: 2.5vw;
+    right: 2.5vw;
+    bottom: 2.5vh;
+    height: 5.5vh;
+  }
+
+  .date-number {
+    font-size: clamp(10px, 2.3vw, 16px);
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =================================
+     배경
+================================= -->
+
+<div id="background"></div>
+
+
+<!-- =================================
+     스크롤 영역
+================================= -->
+
+<div id="scroll-space"></div>
+
+
+<!-- =================================
+     제목
+================================= -->
+
+<div class="title-bg"></div>
+
+<h1 class="title-text">
+  Notice The Unnoticed
+</h1>
+
+
+<!-- =================================
+     날짜 바
+================================= -->
+
+<div class="date-bg"></div>
+
+<div class="date-track" id="dateTrack"></div>
+
+
+
+<script>
+
+
+/* =========================================
+   1. 달력 기본 설정
+========================================= */
+
+// 현재 연도 기준
+const year = new Date().getFullYear();
+
+
+// 각 월의 날짜 수 계산
+const daysPerMonth = Array.from(
+  { length: 12 },
+  (_, month) => new Date(year, month + 1, 0).getDate()
+);
+
+
+// 1년 전체 날짜 수
+const totalDays = daysPerMonth.reduce(
+  (total, days) => total + days,
+  0
+);
+
+
+
+/* =========================================
+   2. 스크롤 설정
+========================================= */
+
+// 하루가 진행되는 스크롤 거리
+// 숫자가 클수록 날짜와 배경 변화가 느려짐
+
+const PIXELS_PER_DAY = 600;
+
+
+// 어두운 테마가 나올 확률
+const DARK_DAY_CHANCE = 0.16;
+
+
+// 스크롤 영역
+const scrollSpace = document.getElementById('scroll-space');
+
+
+// 전체 스크롤 길이 설정
+function setScrollHeight() {
+
+  scrollSpace.style.height =
+    `${window.innerHeight + totalDays * PIXELS_PER_DAY}px`;
+
+}
+
+setScrollHeight();
+
+
+
+/* =========================================
+   3. 배경 색상 테마
+========================================= */
+
+// 각 테마는 총 5개의 시간대 색상으로 구성
+// 각 시간대마다 좌에서 우로 5가지 색상을 배치
+//
+// 0 : 새벽
+// 1 : 아침
+// 2 : 낮
+// 3 : 노을
+// 4 : 밤
+//
+// 하루 안에서 이 5가지 색상 배열이 부드럽게 변화함
+
+
+const DAY_THEMES = [
+
+
+  // THEME 1 : BLUE / TURQUOISE
+  [
+    [
+      "#A95059",
+      "#37245F",
+      "#2A2059",
+      "#211C53",
+      "#171647"
+    ],
+
+    [
+      "#45BDE9",
+      "#71BFC2",
+      "#88C2B1",
+      "#A8C49F",
+      "#C4C99C"
+    ],
+
+    [
+      "#BCEBF8",
+      "#A1E3F4",
+      "#9CDDF1",
+      "#AEE5F3",
+      "#C5EEF5"
+    ],
+
+    [
+      "#FFE0A3",
+      "#FF6848",
+      "#E84B3E",
+      "#235EC7",
+      "#173D9F"
+    ],
+
+    [
+      "#A45B64",
+      "#3D2B68",
+      "#30265D",
+      "#211D58",
+      "#151443"
+    ]
+  ],
+
+
+  // THEME 2 : WARM / SAGE
+  [
+    [
+      "#AA625C",
+      "#45305D",
+      "#322451",
+      "#28214B",
+      "#171843"
+    ],
+
+    [
+      "#EBC08F",
+      "#D9C5A0",
+      "#A7C2A2",
+      "#83B8B5",
+      "#73ACB9"
+    ],
+
+    [
+      "#D8F0E6",
+      "#BCE7DB",
+      "#AADDE0",
+      "#BBDDDC",
+      "#DEE9D6"
+    ],
+
+    [
+      "#FFD28C",
+      "#F18A62",
+      "#C75B67",
+      "#5C5FA9",
+      "#29438C"
+    ],
+
+    [
+      "#855568",
+      "#4A3466",
+      "#33275A",
+      "#242051",
+      "#15183E"
+    ]
+  ],
+
+
+  // THEME 3 : COOL / BLUE
+  [
+    [
+      "#806A9A",
+      "#3A3678",
+      "#292D6A",
+      "#20255C",
+      "#151C4B"
+    ],
+
+    [
+      "#4BAFCF",
+      "#70CBD1",
+      "#9AD9D8",
+      "#B1D9D2",
+      "#A6C3C2"
+    ],
+
+    [
+      "#B8EAF3",
+      "#A3DFF4",
+      "#9ADAF0",
+      "#B5E5F1",
+      "#D0ECF1"
+    ],
+
+    [
+      "#F8C4A6",
+      "#E98791",
+      "#9B75B7",
+      "#496AB5",
+      "#224A98"
+    ],
+
+    [
+      "#766A9D",
+      "#443A78",
+      "#322D6C",
+      "#22265F",
+      "#151A4B"
+    ]
+  ],
+
+
+  // THEME 4 : MUTED / PASTEL
+  [
+    [
+      "#A76E68",
+      "#4D3D66",
+      "#3C335C",
+      "#2F2D53",
+      "#252346"
+    ],
+
+    [
+      "#9BC8C3",
+      "#A9C5AE",
+      "#B9C5A6",
+      "#C5BE9A",
+      "#B6B8A0"
+    ],
+
+    [
+      "#D6E7E4",
+      "#C8E2DF",
+      "#B8DEE0",
+      "#D1E7E0",
+      "#DDE5D5"
+    ],
+
+    [
+      "#EFC69B",
+      "#D98B75",
+      "#A46D83",
+      "#586B9C",
+      "#354D80"
+    ],
+
+    [
+      "#8C687A",
+      "#51456B",
+      "#40375F",
+      "#302C55",
+      "#211F43"
+    ]
+  ]
+
+];
+
+
+
+/* =========================================
+   4. 어두운 날 테마
+========================================= */
+
+// 랜덤하게 선택되는 어두운 날
+// 전체적으로 명도가 낮지만 시간대에 따라 색상은 변화함
+
+
+const DARK_THEME = [
+
+  // 새벽
+  [
+    "#714853",
+    "#302542",
+    "#28203E",
+    "#201B39",
+    "#17152E"
+  ],
+
+  // 아침
+  [
+    "#36525F",
+    "#35565B",
+    "#3F615A",
+    "#4C6157",
+    "#4D5851"
+  ],
+
+  // 낮
+  [
+    "#556875",
+    "#4D626E",
+    "#536975",
+    "#5B6D72",
+    "#666C6A"
+  ],
+
+  // 노을
+  [
+    "#785044",
+    "#713E51",
+    "#563A60",
+    "#2D3D6A",
+    "#1F315E"
+  ],
+
+  // 밤
+  [
+    "#4A364B",
+    "#302941",
+    "#25223A",
+    "#1B1A31",
+    "#111126"
+  ]
+
+];
+
+
+
+/* =========================================
+   5. 날짜별 랜덤 테마 배정
+========================================= */
+
+// 새로고침해도 같은 날짜에는 같은 테마가 유지되도록
+// 날짜 번호를 이용한 고정 랜덤 생성
+
+
+function randomForDay(dayIndex, salt) {
+
+  const value = Math.sin(
+    (dayIndex + 1) * 127.1 +
+    salt * 311.7 +
+    74.7
+  ) * 43758.5453;
+
+  return value - Math.floor(value);
+
+}
+
+
+// 각 날짜에 배정된 테마 저장
+const themeCache = new Map();
+
+
+function getDailyTheme(dayIndex) {
+
+  if (themeCache.has(dayIndex)) {
+    return themeCache.get(dayIndex);
+  }
+
+
+  let selectedTheme;
+
+
+  // 일정 확률로 어두운 날 생성
+  if (randomForDay(dayIndex, 1) < DARK_DAY_CHANCE) {
+
+    selectedTheme = DARK_THEME;
+
+  }
+
+  // 나머지는 4가지 테마 중 하나 선택
+  else {
+
+    const themeIndex = Math.floor(
+      randomForDay(dayIndex, 2) * DAY_THEMES.length
+    );
+
+    selectedTheme = DAY_THEMES[themeIndex];
+
+  }
+
+
+  themeCache.set(dayIndex, selectedTheme);
+
+  return selectedTheme;
+
+}
+
+
+
+/* =========================================
+   6. 색상 보간 함수
+========================================= */
+
+// 두 색상 사이의 중간 색상을 계산
+// 스크롤에 따라 색상이 자연스럽게 이어지도록 함
+
+
+function interpolateColor(colorA, colorB, progress) {
+
+  const a = parseInt(colorA.slice(1), 16);
+  const b = parseInt(colorB.slice(1), 16);
+
+  const r = Math.round(
+    ((a >> 16) & 255) * (1 - progress) +
+    ((b >> 16) & 255) * progress
+  );
+
+  const g = Math.round(
+    ((a >> 8) & 255) * (1 - progress) +
+    ((b >> 8) & 255) * progress
+  );
+
+  const bl = Math.round(
+    (a & 255) * (1 - progress) +
+    (b & 255) * progress
+  );
+
+  return '#' +
+    [r, g, bl]
+      .map(value => value.toString(16).padStart(2, '0'))
+      .join('');
+
+}
+
+
+
+/* =========================================
+   7. 배경 그라디언트 업데이트
+========================================= */
+
+
+const background = document.getElementById('background');
+
+
+function updateBackground(dayIndex, dayProgress) {
+
+  // 해당 날짜에 배정된 색상 테마
+  const theme = getDailyTheme(dayIndex);
+
+
+  // 하루의 진행 정도를 5단계로 변환
+  const framePosition =
+    Math.max(0, Math.min(1, dayProgress)) * (theme.length - 1);
+
+
+  // 현재 시간대
+  const frameIndex = Math.min(
+    theme.length - 2,
+    Math.floor(framePosition)
+  );
+
+
+  // 현재 시간대 사이의 진행도
+  const progress = framePosition - frameIndex;
+
+
+  const currentFrame = theme[frameIndex];
+  const nextFrame = theme[frameIndex + 1];
+
+
+  // 좌우 5개 색상을 각각 보간
+  const colors = currentFrame.map((color, index) => {
+
+    return interpolateColor(
+      color,
+      nextFrame[index],
+      progress
+    );
+
+  });
+
+
+  // 화면 전체에 그라디언트 적용
+  background.style.background = `
+    linear-gradient(
+      112deg,
+      ${colors[0]} 0%,
+      ${colors[1]} 25%,
+      ${colors[2]} 50%,
+      ${colors[3]} 75%,
+      ${colors[4]} 100%
+    )
+  `;
+
+}
+
+
+
+/* =========================================
+   8. 날짜 영역 생성
+========================================= */
+
+
+const dateTrack = document.getElementById('dateTrack');
+
+let dateHighlight;
+let numberElements = [];
+
+let currentMonth = -1;
+let currentDay = -1;
+
+
+
+/* =========================================
+   9. 월별 날짜 숫자 생성
+========================================= */
+
+
+function renderMonth(month) {
+
+  const days = daysPerMonth[month];
+
+
+  // 기존 숫자 제거
+  dateTrack.innerHTML = '';
+
+
+  // 해당 월의 날짜 수에 맞춰 칸 분할
+  dateTrack.style.gridTemplateColumns =
+    `repeat(${days}, minmax(0, 1fr))`;
+
+
+  // 흰색 선택 박스 생성
+  dateHighlight = document.createElement('div');
+
+  dateHighlight.className = 'date-highlight';
+
+  dateTrack.appendChild(dateHighlight);
+
+
+  numberElements = [];
+
+
+  // 날짜 숫자 생성
+  for (let day = 1; day <= days; day++) {
+
+    const number = document.createElement('span');
+
+    number.className = 'date-number';
+
+    number.textContent = day;
+
+    dateTrack.appendChild(number);
+
+    numberElements.push(number);
+
+  }
+
+
+  currentMonth = month;
+  currentDay = -1;
+
+}
+
+
+
+/* =========================================
+   10. 연간 날짜 계산
+========================================= */
+
+
+function getCalendarDate(index) {
+
+  let remainingDays = index;
+
+
+  for (let month = 0; month < 12; month++) {
+
+    const days = daysPerMonth[month];
+
+
+    if (remainingDays < days) {
+
+      return {
+
+        month: month,
+
+        day: remainingDays + 1,
+
+        monthLength: days
+
+      };
+
+    }
+
+
+    remainingDays -= days;
+
+  }
+
+
+  return {
+
+    month: 11,
+
+    day: 31,
+
+    monthLength: daysPerMonth[11]
+
+  };
+
+}
+
+
+
+/* =========================================
+   11. 날짜 업데이트
+========================================= */
+
+
+function updateDate(index) {
+
+  const date = getCalendarDate(index);
+
+  const month = date.month;
+  const day = date.day;
+  const days = date.monthLength;
+
+
+  // 월이 바뀌면 숫자 다시 생성
+  if (currentMonth !== month) {
+
+    renderMonth(month);
+
+  }
+
+
+  // 날짜가 바뀔 때만 선택 박스 이동
+  if (currentDay !== day) {
+
+
+    // 이전 숫자 활성화 해제
+    numberElements.forEach(number => {
+
+      number.classList.remove('active');
+
+    });
+
+
+    // 현재 날짜 숫자 활성화
+    const activeNumber = numberElements[day - 1];
+
+    if (activeNumber) {
+
+      activeNumber.classList.add('active');
+
+    }
+
+
+    // 흰색 박스 위치
+    dateHighlight.style.width = `${100 / days}%`;
+
+    dateHighlight.style.left =
+      `${((day - 1) / days) * 100}%`;
+
+
+    currentDay = day;
+
+  }
+
+}
+
+
+
+/* =========================================
+   12. 전체 화면 업데이트
+========================================= */
+
+
+function updateScene(dayIndex, dayProgress) {
+
+  updateDate(dayIndex);
+
+  updateBackground(dayIndex, dayProgress);
+
+}
+
+
+
+/* =========================================
+   13. 스크롤에 따른 변화
+========================================= */
+
+
+let animationFrame = null;
+let isResetting = false;
+
+
+function handleScroll() {
+
+  animationFrame = null;
+
+
+  if (isResetting) return;
+
+
+  const scrollY = window.scrollY;
+
+  const maxScroll = totalDays * PIXELS_PER_DAY;
+
+
+  // 12월 31일에 도달하면 다시 1월 1일로
+  if (scrollY >= maxScroll - 1) {
+
+
+    // 마지막 날짜 및 마지막 밤 표시
+    updateScene(totalDays - 1, 1);
+
+
+    isResetting = true;
+
+
+    requestAnimationFrame(() => {
+
+      window.scrollTo(0, 0);
+
+      // 1월 1일로 복귀
+      updateScene(0, 0);
+
+      isResetting = false;
+
+    });
+
+
+    return;
+
+  }
+
+
+  // 현재 날짜 계산
+  const dayIndex = Math.floor(
+    scrollY / PIXELS_PER_DAY
+  );
+
+
+  // 하루 안에서의 진행도
+  const dayProgress =
+    (scrollY - dayIndex * PIXELS_PER_DAY) /
+    PIXELS_PER_DAY;
+
+
+  // 날짜와 배경 동시 업데이트
+  updateScene(dayIndex, dayProgress);
+
+}
+
+
+
+/* =========================================
+   14. 스크롤 이벤트
+========================================= */
+
+
+function onScroll() {
+
+  if (isResetting || animationFrame !== null) return;
+
+
+  // 브라우저 프레임에 맞춰 업데이트
+  animationFrame = requestAnimationFrame(handleScroll);
+
+}
+
+
+window.addEventListener(
+  'scroll',
+  onScroll,
+  { passive: true }
+);
+
+
+
+/* =========================================
+   15. 화면 크기 변경
+========================================= */
+
+
+window.addEventListener('resize', () => {
+
+  setScrollHeight();
+
+  handleScroll();
+
+});
+
+
+
+/* =========================================
+   16. 새로고침 시 초기화
+========================================= */
+
+
+if ('scrollRestoration' in history) {
+
+  history.scrollRestoration = 'manual';
+
+}
+
+
+// 항상 맨 처음으로 이동
+window.scrollTo(0, 0);
+
+
+// 1월 1일, 새벽 색상으로 시작
+updateScene(0, 0);
+
+
+</script>
+
+
+<!-- <div style="
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 85vw !important;
+  z-index: 9999 !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: white !important;
+  font-family: 'Cossette Texte', sans-serif !important;
+  font-size: clamp(18px, 2vw, 32px) !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+  text-align: center !important;
+  pointer-events: none !important;
+">
+  가장 중요한 부분 그래픽 제작을 다 못하였습니다 다음주에 달라진 모습으로 오겠습니다...
+</div> -->
+
+</body>
+</html>
